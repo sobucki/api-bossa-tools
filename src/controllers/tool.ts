@@ -1,9 +1,11 @@
-describe('Tools functional tests', () => {
-  it('should return a list of registered tools', async () => {
-    const { body, status } = await global.testRequest.get('/tool');
+import { Controller, Get } from '@overnightjs/core';
+import { Request, Response } from 'express';
 
-    expect(status).toBe(200);
-    expect(body).toEqual([
+@Controller('tool')
+export class ToolController {
+  @Get('')
+  public getAllTools(_: Request, res: Response): void {
+    res.send([
       {
         id: 1,
         title: 'Notion',
@@ -35,5 +37,5 @@ describe('Tools functional tests', () => {
         tags: ['web', 'framework', 'node', 'http2', 'https', 'localhost'],
       },
     ]);
-  });
-});
+  }
+}
