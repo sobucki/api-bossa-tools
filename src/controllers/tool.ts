@@ -1,11 +1,11 @@
-import supertest from 'supertest';
+import { Controller, Get, Post } from '@overnightjs/core';
+import { Request, Response } from 'express';
 
-describe('Tools functional tests', () => {
-  it('should return a list of registered tools', async () => {
-    const { body, status } = await supertest(app).get('/');
-
-    expect(status).toBe(200);
-    expect(body).toBe([
+@Controller('tool')
+export class ToolController {
+  @Get('')
+  public getAllTools(_: Request, res: Response): void {
+    res.send([
       {
         id: 1,
         title: 'Notion',
@@ -37,5 +37,10 @@ describe('Tools functional tests', () => {
         tags: ['web', 'framework', 'node', 'http2', 'https', 'localhost'],
       },
     ]);
-  });
-});
+  }
+
+  @Post('')
+  public async create(req: Request, res: Response): Promise<void> {
+    res.status(201).send(req.body);
+  }
+}
