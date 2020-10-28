@@ -1,4 +1,4 @@
-import { Controller, Get } from '@overnightjs/core';
+import { Controller, Get, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
 @Controller('tool')
@@ -37,5 +37,10 @@ export class ToolController {
         tags: ['web', 'framework', 'node', 'http2', 'https', 'localhost'],
       },
     ]);
+  }
+
+  @Post('')
+  public async create(req: Request, res: Response): Promise<void> {
+    res.status(201).send(req.body);
   }
 }
