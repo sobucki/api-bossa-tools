@@ -9,9 +9,9 @@
     "start:dev": "ts-node-dev 'src/index.ts'",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:unit": "jest",
-    "test:functional": "jest --projects ./test --forceExit --runInBand",
+    "test": "yarn lint && yarn style:check && yarn test:unit && yarn test:functional",
+    "test:unit": "jest --passWithNoTests",
+    "test:functional": "jest --projects ./test --detectOpenHandles --forceExit --runInBand",
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
     "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
   },

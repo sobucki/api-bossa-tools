@@ -1,46 +1,21 @@
 import { Controller, Get, Post } from '@overnightjs/core';
+import { Tool } from '@src/models/tool';
 import { Request, Response } from 'express';
 
-@Controller('tool')
+@Controller('tools')
 export class ToolController {
   @Get('')
-  public getAllTools(_: Request, res: Response): void {
-    res.send([
-      {
-        id: 1,
-        title: 'Notion',
-        link: 'https://notion.so',
-        description:
-          'All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ',
-        tags: [
-          'organization',
-          'planning',
-          'collaboration',
-          'writing',
-          'calendar',
-        ],
-      },
-      {
-        id: 2,
-        title: 'json-server',
-        link: 'https://github.com/typicode/json-server',
-        description:
-          'Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.',
-        tags: ['api', 'json', 'schema', 'node', 'github', 'rest'],
-      },
-      {
-        id: 3,
-        title: 'fastify',
-        link: 'https://www.fastify.io/',
-        description:
-          'Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.',
-        tags: ['web', 'framework', 'node', 'http2', 'https', 'localhost'],
-      },
-    ]);
+  public async getAllTools(_: Request, res: Response): Promise<void> {
+    const tools = await Tool.find({}).exec();
+
+    res.send(tools);
   }
 
   @Post('')
   public async create(req: Request, res: Response): Promise<void> {
-    res.status(201).send(req.body);
+    console.log(req.body);
+    const tool = new Tool(req.body);
+    const result = await tool.save();
+    res.status(201).send(result);
   }
 }

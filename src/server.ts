@@ -1,5 +1,6 @@
 import './util/module-alias';
 
+import * as http from 'http';
 import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
 import { ToolController } from './controllers/tool';
@@ -7,6 +8,7 @@ import { Application } from 'express';
 import * as database from '@src/database';
 
 export class SetupServer extends Server {
+  private server?: http.Server;
   constructor(private port = 3000) {
     super();
   }
@@ -32,6 +34,12 @@ export class SetupServer extends Server {
 
   public async close(): Promise<void> {
     await database.close();
+  }
+
+  public start(): void {
+    this.server = this.app.listen(this.port, () => {
+      console.info('Server listening on port: ' + this.port);
+    });
   }
 
   public getApp(): Application {
