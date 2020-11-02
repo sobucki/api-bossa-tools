@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@overnightjs/core';
+import { Controller, Delete, Get, Post } from '@overnightjs/core';
 import { Tool } from '@src/models/tool';
 import { Request, Response } from 'express';
 import { BaseController } from '.';
@@ -24,6 +24,19 @@ export class ToolController extends BaseController {
       const tool = new Tool(req.body);
       const result = await tool.save();
       res.status(201).send(result);
+    } catch (error) {
+      this.sendErrorResponse(res, {
+        code: 500,
+        message: 'Something went wrong',
+      });
+    }
+  }
+
+  @Delete(':id')
+  public async delete(req: Request, res: Response): Promise<void> {
+    try {
+      await Tool.deleteOne({ _id: req.params.id });
+      res.status(204).send();
     } catch (error) {
       this.sendErrorResponse(res, {
         code: 500,

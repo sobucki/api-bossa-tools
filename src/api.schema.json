@@ -210,6 +210,28 @@
           }
         }
       }
+    },
+    "/tools/{id}": {
+      "delete": {
+        "description": "Remove one register of tools by id",
+        "operationId": "deleteTool",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "example": "5fa060b235cf6e710f3ff3aa"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The tool has been deleted"
+          }
+        }
+      }
     }
   },
   "components": {

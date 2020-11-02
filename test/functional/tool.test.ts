@@ -53,7 +53,7 @@ describe('Tools functional tests', () => {
   });
 
   describe('When creating a tool', () => {
-    it('should create a tool whith success', async () => {
+    it('should create a tool with success', async () => {
       const newTool = {
         title: 'hotel',
         link: 'https://github.com/typicode/hotel',
@@ -73,6 +73,33 @@ describe('Tools functional tests', () => {
       const response = await global.testRequest.post('/tools').send(newTool);
       expect(response.status).toBe(201);
       expect(response.body).toEqual(expect.objectContaining(newTool));
+    });
+  });
+
+  describe('When deleting a tool', () => {
+    it('should delete a tool by id with success', async () => {
+      const newTool = {
+        title: 'hotel',
+        link: 'https://github.com/typicode/hotel',
+        description:
+          'Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box.',
+        tags: [
+          'node',
+          'organizing',
+          'webapps',
+          'domain',
+          'developer',
+          'https',
+          'proxy',
+        ],
+      };
+
+      const savedTool = await new Tool(newTool).save();
+
+      const response = await global.testRequest.delete(
+        `/tools/${savedTool.id}`
+      );
+      expect(response.status).toBe(204);
     });
   });
 });
