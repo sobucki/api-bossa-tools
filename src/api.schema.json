@@ -187,6 +187,16 @@
       "post": {
         "description": "Create a new Tool",
         "operationId": "createTool",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/jwtToken"
+            },
+            "required": true
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -237,6 +247,14 @@
             "schema": {
               "type": "string",
               "example": "5fa060b235cf6e710f3ff3aa"
+            },
+            "required": true
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/jwtToken"
             },
             "required": true
           }
