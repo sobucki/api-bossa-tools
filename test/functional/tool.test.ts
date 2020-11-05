@@ -4,7 +4,7 @@ describe('Tools functional tests', () => {
   beforeEach(async () => await Tool.deleteMany({}));
 
   describe('When search the tools', () => {
-    it('should return a list of registered tools', async () => {
+    it('should return a list of registered tools without filters', async () => {
       const newTool1 = {
         title: 'Notion',
         link: 'https://notion.so',
@@ -49,6 +49,83 @@ describe('Tools functional tests', () => {
           expect.objectContaining(newTool3),
         ])
       );
+    });
+
+    it('should return a list filtered by tag', async () => {
+      const newTool1 = {
+        title: 'Notion',
+        link: 'https://notion.so',
+        description:
+          'All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ',
+        tags: [
+          'organization',
+          'planning',
+          'collaboration',
+          'writing',
+          'calendar',
+        ],
+      };
+
+      const newTool2 = {
+        title: 'json-server',
+        link: 'https://github.com/typicode/json-server',
+        description:
+          'Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.',
+        tags: ['api', 'json', 'schema', 'node', 'github', 'rest'],
+      };
+
+      const newTool3 = {
+        title: 'fastify',
+        link: 'https://www.fastify.io/',
+        description:
+          'Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.',
+        tags: ['web', 'framework', 'node', 'http2', 'https', 'localhost'],
+      };
+
+      await new Tool(newTool1).save();
+      await new Tool(newTool2).save();
+      await new Tool(newTool3).save();
+
+      const tagFilter = 'node';
+
+      const { body, status } = await global.testRequest.get(
+        `/tools?tag=${tagFilter}`
+      );
+
+      expect(status).toBe(200);
+      expect(body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(newTool2),
+          expect.objectContaining(newTool3),
+        ])
+      );
+    });
+
+    it('should not return any tool, filtering by unknown tag', async () => {
+      const newTool1 = {
+        title: 'Notion',
+        link: 'https://notion.so',
+        description:
+          'All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ',
+        tags: [
+          'organization',
+          'planning',
+          'collaboration',
+          'writing',
+          'calendar',
+        ],
+      };
+
+      await new Tool(newTool1).save();
+
+      const tagFilter = 'invalid-tag';
+
+      const { body, status } = await global.testRequest.get(
+        `/tools?tag=${tagFilter}`
+      );
+
+      expect(status).toBe(200);
+      expect(body).toEqual([]);
     });
   });
 
