@@ -1,4 +1,5 @@
-import { Controller, Delete, Get, Post } from '@overnightjs/core';
+import { Middleware, Controller, Delete, Get, Post } from '@overnightjs/core';
+import { authMiddleware } from '@src/midlewares/auth';
 import { Tool } from '@src/models/tool';
 import { Request, Response } from 'express';
 import { BaseController } from '.';
@@ -27,9 +28,10 @@ export class ToolController extends BaseController {
   }
 
   @Post('')
+  @Middleware(authMiddleware)
   public async create(req: Request, res: Response): Promise<void> {
     try {
-      const tool = new Tool(req.body);
+      const tool = new Tool({ ...req.body, user: req.decoded.id });
       const result = await tool.save();
       res.status(201).send(result);
     } catch (error) {
@@ -41,9 +43,10 @@ export class ToolController extends BaseController {
   }
 
   @Delete(':id')
+  @Middleware(authMiddleware)
   public async delete(req: Request, res: Response): Promise<void> {
     try {
-      await Tool.deleteOne({ _id: req.params.id });
+      await Tool.deleteOne({ _id: req.params.id, user: req.decoded.id });
       res.status(204).send();
     } catch (error) {
       this.sendErrorResponse(res, {
