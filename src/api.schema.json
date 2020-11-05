@@ -156,6 +156,21 @@
       "get": {
         "description": "Get the list of tools ordered by the most older",
         "operationId": "getTools",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tag",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "example": "node"
+              }
+            },
+            "style": "form",
+            "explode": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "The list of tools has been returned",

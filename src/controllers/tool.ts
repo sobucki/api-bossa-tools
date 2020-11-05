@@ -6,9 +6,17 @@ import { BaseController } from '.';
 @Controller('tools')
 export class ToolController extends BaseController {
   @Get('')
-  public async getAllTools(_: Request, res: Response): Promise<void> {
+  public async getAllTools(req: Request, res: Response): Promise<void> {
     try {
-      const tools = await Tool.find({}).exec();
+      const { tag } = req.query;
+      let tools;
+
+      if (tag) {
+        tools = await Tool.find({ tags: { $in: tag as string[] } }).exec();
+      } else {
+        tools = await Tool.find({}).exec();
+      }
+
       res.send(tools);
     } catch (error) {
       this.sendErrorResponse(res, {
