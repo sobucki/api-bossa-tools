@@ -13,11 +13,11 @@
   "servers": [
     {
       "url": "http://localhost:3000/",
-      "description": "Production Server"
+      "description": "Local server"
     },
     {
-      "url": "http://localhost:3000/",
-      "description": "Local server"
+      "url": "http://64.227.106.80:3000/",
+      "description": "Production Server"
     }
   ],
   "tags": [

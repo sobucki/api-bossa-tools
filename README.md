@@ -1,5 +1,11 @@
 # API - VUTTR (Very Useful Tools to Remember)
 
+## Acesso a aplicação em produção
+
+```html
+http://64.227.106.80:3000
+```
+
 ## Índice
 
 - [O que é](#O-que-%C3%A9)
