@@ -3,8 +3,13 @@ version: '3'
 services:
   app:
     build: .
+    image: myapp
     container_name: app
     restart: always
+    environment:
+      MONGODB_URL: 'mongodb://mongo:27017/bossa-tools'
+      APP_PORT: 3000
+      AUTH_KEY: '366f052817feb56db98d4d7ae1d46e38'
     ports:
       - '3000:3000'
     networks:
@@ -21,6 +26,16 @@ services:
       - 27017
     volumes:
       - dbdata:/data/db
+    networks:
+      - app-network
+
+  app-test:
+    image: myapp
+    command: dockerize -wait http://mongo:27017 -timeout 20s bash -c "yarn test"
+    environment:
+      MONGODB_URL: 'mongodb://mongo:27017/bossa-tools-test'
+    depends_on:
+      - mongo
     networks:
       - app-network
 
