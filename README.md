@@ -2,20 +2,20 @@
 
 ## Índice
 
-- [O que é](O-que-%C3%A9)
-- [Tecnologias utilizadas](Quais-tecnologias-foram-utilizadas)
-- [Como baixar e executar](%F0%9F%93%A6%EF%B8%8F-Como-baixar-e-executar-o-projeto)
-- [Sobre a aplicação](Sobre-a-aplica%C3%A7%C3%A3o)
-- [Requisitos necessários para atender](Requisitos-necess%C3%A1rios-para-atender)
-- [API REST](API-REST)
-  - [Autenticação](Autentica%C3%A7%C3%A3o)
-    - [POST /users](POST-%2Fusers)
-    - [POST /authenticate](POST-%2Fauthenticate)
-    - [GET /me](GET-%2Fme)
-  - [Tools](Tools)
-    - [GET /tools](GET-%2Ftools)
-    - [POST /tools](POST-%2Ftools)
-    - [DELETE /tools/:id](DELETE-%2Ftools%2F%3Aid)
+- [O que é](#O-que-%C3%A9)
+- [Tecnologias utilizadas](#Quais-tecnologias-foram-utilizadas)
+- [Como baixar e executar](#%F0%9F%93%A6%EF%B8%8F-Como-baixar-e-executar-o-projeto)
+- [Sobre a aplicação](#Sobre-a-aplica%C3%A7%C3%A3o)
+- [Requisitos necessários para atender](#Requisitos-necess%C3%A1rios-para-atender)
+- [API REST](#API-REST)
+  - [Autenticação](#Autentica%C3%A7%C3%A3o)
+    - [POST /users](#POST-%2Fusers)
+    - [POST /authenticate](#POST-%2Fauthenticate)
+    - [GET /me](#GET-%2Fme)
+  - [Tools](#Tools)
+    - [GET /tools](#GET-%2Ftools)
+    - [POST /tools](#POST-%2Ftools)
+    - [DELETE /tools/:id](#DELETE-%2Ftools%2F%3Aid)
 
 ## O que é
 
