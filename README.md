@@ -11,7 +11,7 @@
   - [Tools](#Tools)
     - [GET /tools](#GET-tools)
     - [POST /tools](#POST-tools)
-    - [DELETE /tools/:id](#DELETE-tools%3Aid)
+    - [DELETE /tools/:id](#delete-toolsid)
   - [Autenticação](#Autentica%C3%A7%C3%A3o)
     - [POST /users](#POST-users)
     - [POST /authenticate](#POST-authenticate)
