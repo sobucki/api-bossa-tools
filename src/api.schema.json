@@ -13,147 +13,27 @@
   "servers": [
     {
       "url": "http://localhost:3000/",
-      "description": "Production Server"
+      "description": "Local server"
     },
     {
-      "url": "http://localhost:3000/",
-      "description": "Local server"
+      "url": "http://64.227.106.80:3000/",
+      "description": "Production Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "tools",
+      "description": "Operations about tools"
+    },
+    {
+      "name": "users",
+      "description": "Operations about users"
     }
   ],
   "paths": {
-    "/users": {
-      "post": {
-        "description": "Create a new User",
-        "operationId": "createUser",
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "The user has been created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserCreatedResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid parameters",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "example": {
-                  "message": "Invalid parameters",
-                  "code": "400",
-                  "error": "Bad Request"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/authenticate": {
-      "post": {
-        "description": "Authenticate the user on the API generating a JWT token",
-        "operationId": "authenticateUser",
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserAuth"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "The user has been authenticate and the JWT returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthenticatedUserResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "example": {
-                  "message": "User unauthorized",
-                  "code": "401",
-                  "error": "Unauthorized"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/me": {
-      "get": {
-        "description": "Get the profile of the token's owner",
-        "operationId": "getUserProfile",
-        "parameters": [
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/jwtToken"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The user information",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserProfileResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "example": {
-                  "message": "User not found",
-                  "code": "404",
-                  "error": "Not Found"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/tools": {
       "get": {
+        "tags": ["tools"],
         "description": "Get the list of tools ordered by the most older",
         "operationId": "getTools",
         "parameters": [
@@ -185,6 +65,7 @@
         }
       },
       "post": {
+        "tags": ["tools"],
         "description": "Create a new Tool",
         "operationId": "createTool",
         "parameters": [
@@ -238,6 +119,7 @@
     },
     "/tools/{id}": {
       "delete": {
+        "tags": ["tools"],
         "description": "Remove one register of tools by id",
         "operationId": "deleteTool",
         "parameters": [
@@ -262,6 +144,140 @@
         "responses": {
           "204": {
             "description": "The tool has been deleted"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["users"],
+        "description": "Create a new User",
+        "operationId": "createUser",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The user has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreatedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid parameters",
+                  "code": "400",
+                  "error": "Bad Request"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/authenticate": {
+      "post": {
+        "tags": ["users"],
+        "description": "Authenticate the user on the API generating a JWT token",
+        "operationId": "authenticateUser",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAuth"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The user has been authenticate and the JWT returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticatedUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "User unauthorized",
+                  "code": "401",
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": ["users"],
+        "description": "Get the profile of the token's owner",
+        "operationId": "getUserProfile",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/jwtToken"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "User not found",
+                  "code": "404",
+                  "error": "Not Found"
+                }
+              }
+            }
           }
         }
       }

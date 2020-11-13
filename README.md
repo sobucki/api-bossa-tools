@@ -1,5 +1,28 @@
 # API - VUTTR (Very Useful Tools to Remember)
 
+## Acesso a aplicação em produção
+
+```html
+http://64.227.106.80:3000
+```
+
+## Índice
+
+- [O que é](#O-que-%C3%A9)
+- [Tecnologias utilizadas](#Quais-tecnologias-foram-utilizadas)
+- [Como baixar e executar](#%EF%B8%8F-como-baixar-e-executar-o-projeto)
+- [Sobre a aplicação](#Sobre-a-aplica%C3%A7%C3%A3o)
+- [Requisitos necessários para atender](#Requisitos-necess%C3%A1rios-para-atender)
+- [API REST](#API-REST)
+  - [Tools](#Tools)
+    - [GET /tools](#GET-tools)
+    - [POST /tools](#POST-tools)
+    - [DELETE /tools/:id](#delete-toolsid)
+  - [Autenticação](#Autentica%C3%A7%C3%A3o)
+    - [POST /users](#POST-users)
+    - [POST /authenticate](#POST-authenticate)
+    - [GET /me](#GET-me)
+
 ## O que é
 
 Este projeto tem como objetivo atender ao desafio proposto pela BossaBox, onde foi solicitado o desenvolvimento de uma API para a aplicação VUTTR (Very Useful Tools to Remember).
@@ -8,7 +31,7 @@ Decidi realizar em NodeJs, com Express e banco de dados MongoDB. Abaixo pode ser
 
 ## Quais tecnologias foram utilizadas
 
-A API foi desenvolvida utilizando Node e Express, juntamente com o banco de dados MongoDB. O código foi desenvolvido em Typescript utilizando as praticas de TDD com Jest e testes unitários e end-to-end.
+A API foi desenvolvida utilizando Node e Express, juntamente com o banco de dados MongoDB. O código foi desenvolvido em Typescript utilizando as práticas de TDD com Jest para os testes unitários e funcionais end-to-end.
 
 O projeto utiliza as ferramentas do Github Workflows para CI (Continuous Integration) e configurações em Docker e Docker Compose.
 
@@ -40,85 +63,64 @@ Opção 2 - Iniciando o Node
 $ npm start
 ```
 
-Para este passo é necessário ter o MongoDB instalado ou levantar uma imagem Docker antes de iniciar a aplicação.
+Para este passo é necessário ter o MongoDB instalado ou utilizar uma imagem Docker do MongoDB antes de iniciar a aplicação.
 
 ## Sobre a aplicação
 
 A aplicação tem por finalidade o cadastro de ferramentas úteis para um usuário.
-O usuário para realizar o cadastro dessas ferramentas, precisa primeiramente possuir uma conta com e-mail e senha.
+O usuário para realizar o cadastro dessas ferramentas, precisa primeiramente possuir uma conta com nome, e-mail e senha.
 Após a autenticação feita pelo usuário, ele poderá cadastrar e deletar suas ferramentas.
 A listagem das ferramentas não necessita de autenticação, podendo exibir assim, todas as ferramentas cadastradas no sistema.
 
 ## Requisitos necessários para atender
 
-- [x] Toda a aplicação é exposto na porta 3000
-- [x] Rota para listagem de todas ferramenta cadastradas GET /tools
+- [x] Toda a aplicação é exposta na porta 3000
+- [x] Rota para listagem de todas ferramentas cadastradas GET /tools
 - [x] Possibilidade de filtragem por tag na rota de listagem GET /tools?tag=node
 - [x] Para realização de cadastro e remoção de ferramentas é necessário autenticação
+- [x] Cadastro de novas ferramentas POST /tools (somente com autenticação)
+- [x] Remoção de uma ferramenta DELETE /tools/:id (semente com autenticação e a ferramenta criada pelo usuário)
+
+Extras:
+
+- [x] Autenticação JWT
 - [x] Cadastro de usuário POST /users
 - [x] Autenticação de usuário POST /authenticate
 - [x] Atualização de token GET /me
-- [x] Cadastro de novas ferramentas POST /tools (somente com autenticação)
-- [x] Remoção de uma ferramenta DELETE /tools/:id (semente com autenticação e a ferramenta criada pelo usuário)
 - [x] Testes unitários
 - [x] Testes de integração (end-to-end)
 - [x] Utilização de ESLint, Prettier
 - [x] Conteinerização da aplicação
-- [x] Autenticação JWT
 - [x] Pipeline CI com Github Workflows
 - [x] Deploy em ambiente real utilizando Digital Ocean
 - [x] Documentação com OpenAPI (Swagger)
 
+TODO:
+
+- [ ] Filtragem por qualquer campo
+- [ ] Associação de usuário com o projeto (exemplo: Lista de ferramentas favoritas)
+- [ ] CD - Continous Deployment
+- [ ] Rate limit
+
+<br>
+
 ## API REST
 
-### Autenticação
+## Tools
 
-### POST /users
+### GET /tools
 
-```json
-{
-  "name": "John Doe",
-  "email": "john@mail.com",
-  "password": "12345#@$%"
-}
+| Parâmetro | Tipo    | Obrigatório | Descrição     |
+| :-------- | :------ | :---------- | :------------ |
+| `tag`     | `query` | **Não**     | array[string] |
+
+Exemplo:
+
+```html
+GET /tools?tag=node&tag=web
 ```
 
-### POST /authenticate
-
-```json
-{
-  "email": "john@mail.com",
-  "password": "12345#@$%"
-}
-```
-
-### GET /me
-
-| Parametro        | Tipo     | Obrigatório | Descrição |
-| :--------------- | :------- | :---------- | :-------- |
-| `x-access-token` | `header` | **Sim**     | Token JWT |
-
-Resposta
-
-```json
-{
-  "user": {
-    "name": "John Doe",
-    "email": "john@mail.com",
-    "password": "12345#@$%",
-    "id": "5f9b3c3178bb7fcf2d98c49d"
-  }
-}
-```
-
-### Tools
-
-GET /tools
-Filtro opcional
-Query-params
-Exemplo:/tools?tag=node&tag=web
-
-Resposta
+Resposta:
 
 ```json
 [
@@ -132,11 +134,11 @@ Resposta
 ]
 ```
 
-POST /tools
+| Código | Descrição                 |
+| :----- | :------------------------ |
+| 200    | `Listagem de ferramentas` |
 
-| Parametro        | Tipo     | Obrigatório | Descrição |
-| :--------------- | :------- | :---------- | :-------- |
-| `x-access-token` | `header` | **Sim**     | Token JWT |
+### POST /tools
 
 ```json
 {
@@ -147,7 +149,11 @@ POST /tools
 }
 ```
 
-Resposta
+| Parâmetro        | Tipo     | Obrigatório | Descrição |
+| :--------------- | :------- | :---------- | :-------- |
+| `x-access-token` | `header` | **Sim**     | Token JWT |
+
+Resposta:
 
 ```json
 
@@ -161,9 +167,13 @@ Resposta
 }
 ```
 
-DELETE /tools/:id
+| Código | Descrição            |
+| :----- | :------------------- |
+| 201    | `Criado com sucesso` |
 
-| Parametro        | Tipo     | Obrigatório | Descrição        |
+### DELETE /tools/:id
+
+| Parâmetro        | Tipo     | Obrigatório | Descrição        |
 | :--------------- | :------- | :---------- | :--------------- |
 | `x-access-token` | `header` | **Sim**     | Token JWT        |
 | `id`             | `path`   | **Sim**     | Id da ferramenta |
@@ -174,5 +184,69 @@ Exemplo:
 DELETE /tools/5fa060b235cf6e710f3ff3aa
 ```
 
-Resposta
-Código 204
+Resposta:
+
+| Código | Descrição             |
+| :----- | :-------------------- |
+| 204    | `Ferramenta deletada` |
+
+<br>
+
+## Autenticação
+
+### POST /users
+
+Resposta:
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@mail.com",
+  "password": "12345#@$%"
+}
+```
+
+| Código | Descrição                    |
+| :----- | :--------------------------- |
+| 201    | `Usuário criado com sucesso` |
+| 409    | `E-mail já utilizado`        |
+
+### POST /authenticate
+
+Resposta:
+
+```json
+{
+  "email": "john@mail.com",
+  "password": "12345#@$%"
+}
+```
+
+| Código | Descrição                         |
+| :----- | :-------------------------------- |
+| 200    | `Autenticação do usuário e o JWT` |
+| 401    | `Não autorizado`                  |
+
+### GET /me
+
+| Parâmetro        | Tipo     | Obrigatório | Descrição |
+| :--------------- | :------- | :---------- | :-------- |
+| `x-access-token` | `header` | **Sim**     | Token JWT |
+
+Resposta:
+
+```json
+{
+  "user": {
+    "name": "John Doe",
+    "email": "john@mail.com",
+    "password": "12345#@$%",
+    "id": "5f9b3c3178bb7fcf2d98c49d"
+  }
+}
+```
+
+| Código | Descrição                |
+| :----- | :----------------------- |
+| 200    | `Informações do usuário` |
+| 404    | `Usuário não encontrado` |
