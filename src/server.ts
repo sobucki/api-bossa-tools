@@ -7,13 +7,14 @@ import apiSchema from './api.schema.json';
 
 import { middleware } from 'express-openapi-validator';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
-import { apiErrorValidator } from './midlewares/api-error-validator';
+import { apiErrorValidator } from '@src/midlewares/api-error-validator';
 import * as http from 'http';
 import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
-import { ToolController } from './controllers/tool';
+import { ToolController } from '@src/controllers/tool';
 import { Application } from 'express';
 import * as database from '@src/database';
+import { UsersController } from '@src/controllers/users';
 
 export class SetupServer extends Server {
   private server?: http.Server;
@@ -40,7 +41,9 @@ export class SetupServer extends Server {
 
   private setupControllers(): void {
     const toolController = new ToolController();
-    this.addControllers([toolController]);
+    const userController = new UsersController();
+
+    this.addControllers([toolController, userController]);
   }
 
   private async databaseSetup(): Promise<void> {

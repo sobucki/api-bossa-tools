@@ -5,7 +5,8 @@
       "mongoUrl": "MONGODB_URL"
     },
     "auth": {
-      "key": "JWT_SECRET_KEY"
+      "key": "AUTH_KEY",
+      "tokenExpiresIn": "TOKEN_EXPIRES_IN"
     }
   }
 }
