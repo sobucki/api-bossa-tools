@@ -4,18 +4,18 @@
 
 - [O que é](#O-que-%C3%A9)
 - [Tecnologias utilizadas](#Quais-tecnologias-foram-utilizadas)
-- [Como baixar e executar](#%F0%9F%93%A6%EF%B8%8F-Como-baixar-e-executar-o-projeto)
+- [Como baixar e executar](#%EF%B8%8F-como-baixar-e-executar-o-projeto)
 - [Sobre a aplicação](#Sobre-a-aplica%C3%A7%C3%A3o)
 - [Requisitos necessários para atender](#Requisitos-necess%C3%A1rios-para-atender)
 - [API REST](#API-REST)
-  - [Autenticação](#Autentica%C3%A7%C3%A3o)
-    - [POST /users](#POST-%2Fusers)
-    - [POST /authenticate](#POST-%2Fauthenticate)
-    - [GET /me](#GET-%2Fme)
   - [Tools](#Tools)
-    - [GET /tools](#GET-%2Ftools)
-    - [POST /tools](#POST-%2Ftools)
-    - [DELETE /tools/:id](#DELETE-%2Ftools%2F%3Aid)
+    - [GET /tools](#GET-tools)
+    - [POST /tools](#POST-tools)
+    - [DELETE /tools/:id](#DELETE-tools%3Aid)
+  - [Autenticação](#Autentica%C3%A7%C3%A3o)
+    - [POST /users](#POST-users)
+    - [POST /authenticate](#POST-authenticate)
+    - [GET /me](#GET-me)
 
 ## O que é
 
@@ -102,7 +102,7 @@ TODO:
 
 ## Tools
 
-GET /tools
+### GET /tools
 
 | Parâmetro | Tipo    | Obrigatório | Descrição     |
 | :-------- | :------ | :---------- | :------------ |
@@ -132,7 +132,7 @@ Resposta:
 | :----- | :------------------------ |
 | 200    | `Listagem de ferramentas` |
 
-POST /tools
+### POST /tools
 
 ```json
 {
@@ -165,7 +165,7 @@ Resposta:
 | :----- | :------------------- |
 | 201    | `Criado com sucesso` |
 
-DELETE /tools/:id
+### DELETE /tools/:id
 
 | Parâmetro        | Tipo     | Obrigatório | Descrição        |
 | :--------------- | :------- | :---------- | :--------------- |
