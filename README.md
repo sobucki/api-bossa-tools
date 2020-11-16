@@ -14,6 +14,8 @@ http://64.227.106.80:3000
 - [Sobre a aplicação](#Sobre-a-aplica%C3%A7%C3%A3o)
 - [Requisitos necessários para atender](#Requisitos-necess%C3%A1rios-para-atender)
 - [API REST](#API-REST)
+  - [Swagger](#Swagger)
+    - [GET /docs](#GET-docs)
   - [Tools](#Tools)
     - [GET /tools](#GET-tools)
     - [POST /tools](#POST-tools)
@@ -101,10 +103,17 @@ TODO:
 - [ ] Associação de usuário com o projeto (exemplo: Lista de ferramentas favoritas)
 - [ ] CD - Continous Deployment
 - [ ] Rate limit
+- [ ] Graceful Shutdown
 
 <br>
 
 ## API REST
+
+## Swagger
+
+### GET /docs
+
+Nesta rota pode ser acessado a documentação e especificação OpenAPI, podendo realizar requisições através da estrutura Swagger.
 
 ## Tools
 
